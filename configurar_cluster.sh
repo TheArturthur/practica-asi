@@ -12,19 +12,30 @@ then
     exit 1
 fi
 
-$file = $(sed -E -e 's/#.*//g' -e '/^[[:space:]]*$/d'  -e '/^$/d' $1) 
+# Las líneas en blanco serán ignoradas.
+hashRegex="^[[:space:]]*$";
+# Las líneas que comiencen por almohadilla (símbolo #) serán consideradas comentarios y, por tanto, ignoradas.
+whiteRegex="^#.*";
 
-while read -r line || [[ -n "$line" ]]
+# combine both regex in a big regex
+filterRegex="$hashRegex|$whiteRegex"
+
+
+lineFormatRegex="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?) (raid|mount|lvm|(nis|nfs|backup)_(server|client)) (.+)"
+counter=1
+
+while IFS= read -r line || [[ -n "$line" ]]
 do
-    # COMMAND_on $line;
-    if [[ $line =~ (^\s*'#'.*|^\s*$) ]] # obviar comentarioså
+    if [[ $line =~ $filterRegex ]]
     then
-
-
+        ((counter++))
+        continue
     fi
-    #[[ $(date) =~ ^Fri\ ...\ 13 ]] && echo "It's Friday the 13th!"
-    # (^\s*#.*|^\s*$)
-
+    if [[ ! $line =~ $lineFormatRegex ]]
+    then
+        echo "invalid format on line: $counter"
+        exit 1  
+    fi
+    ((counter++))
 done < "$1"
-
 exit 0
