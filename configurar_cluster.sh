@@ -15,6 +15,7 @@ function check_config_file () {
 
     while IFS= read -r line || [[ -n "$line" ]]
     do
+
         if [[ $line =~ $filterRegex ]]
         then
             ((counter++))
@@ -25,34 +26,52 @@ function check_config_file () {
             echo "invalid format on line: $counter"
             return 1  
         fi
+        if ! [[ $line =~ $filterRegex ]]
+        then
+            IFS=' ' read -ra line_array <<< "$line"
+            case ${line_array[1]} in 
+                "mount")
+                    echo "Mounting in '${line_array[0]}' with configuration found in '${line_array[2]}...'"
+                    . ./aux/mount.sh
+                    mount $line_array;;
+                "raid")
+                    echo "Configuring RAID in '${line_array[0]}' with configuration found in '${line_array[2]}...'"
+                    . ./aux/raid.sh
+                    raid $line_array;;
+                "lvm")
+                    echo "Configuring LVM in '${line_array[0]}' with configuration found in '${line_array[2]}...'"
+                    . ./aux/lvm.sh
+                    lvm $line_array;;
+                "nis_server")
+                    echo "Configuring NIS Server in '${line_array[0]}' with configuration found in '${line_array[2]}...'"
+                    . ./aux/nis.sh
+                    nis_server $line_array;;
+                "nis_client")
+                    echo "Configuring NIS Client in '${line_array[0]}' with configuration found in '${line_array[2]}...'"
+                    . ./aux/nis.sh
+                    nis_client $line_array;;
+                "nfs_server")
+                    echo "Configuring NFS Server in '${line_array[0]}' with configuration found in '${line_array[2]}...'"
+                    . ./aux/nfs_server.sh
+                    nfs_server $line_array;;
+                "nfs_client")
+                    echo "Configuring NFS Client in '${line_array[0]}' with configuration found in '${line_array[2]}...'"
+                    . ./aux/nfs_client.sh
+                    nfs_client $line_array;;
+                "backup_server")
+                    echo "Configuring Backup Server in '${line_array[0]}' with configuration found in '${line_array[2]}...'"
+                    . ./aux/backup_server.sh
+                    backup_server $line_array;;
+                "backup_client")
+                    echo "Configuring Backup Client in '${line_array[0]}' with configuration found in '${line_array[2]}...'"
+                    . ./aux/backup_client.sh
+                    backup_client $line_array;;
+            esac
+        fi
         ((counter++))
     done < "$1"
     unset IFS
     return 0
-}
-
-function mount () {
-
-}
-
-function raid () {
-
-}
-
-function lvm () {
-    
-}
-
-function nis () {
-
-}
-
-function nfs () {
-
-}
-
-function backup () {
-
 }
 
 if [[ $# -ne 1 || $1 = "-h" || $1 = "--help" ]]
@@ -72,45 +91,6 @@ check_config_file $1
 
 if [[ $? -ne 0 ]]
 then
-    echo "$0: $1: Wrong syntax. No file is processed." >&2
+    echo "$0: $1: Wrong syntax. File stopped processing on line $counter." >&2
     exit 1
 fi
-
-# Run through lines to run configuration for each:
-while IFS= read -r line || [[ -n "$line" ]]
-do
-    if ! [[ $line =~ $filterRegex ]]
-    then
-        IFS=' ' read -ra line_array <<< "$line"
-        echo ${line_array[@]}
-        case ${line_array[1]} in 
-            "mount")
-                echo "Mounting in '${line_array[0]}' with configuration found in '${line_array[2]}'"
-                mount $line_array;;
-            "raid")
-                echo "Configuring RAID in '${line_array[0]}' with configuration found in '${line_array[2]}'"
-                raid $line_array;;
-            "lvm")
-                echo "Configuring LVM in '${line_array[0]}' with configuration found in '${line_array[2]}'"
-                lvm $line_array;;
-            "nis_server")
-                echo "Configuring NIS Server in '${line_array[0]}' with configuration found in '${line_array[2]}'"
-                nis $line_array "server";;
-            "nis_client")
-                echo "Configuring NIS Client in '${line_array[0]}' with configuration found in '${line_array[2]}'"
-                nis $line_array "client";;
-            "nfs_server")
-                echo "Configuring NFS Server in '${line_array[0]}' with configuration found in '${line_array[2]}'"
-                nfs $line_array "server";;
-            "nfs_client")
-                echo "Configuring NFS Client in '${line_array[0]}' with configuration found in '${line_array[2]}'"
-                nfs $line_array "client";;
-            "backup_server")
-                echo "Configuring Backup Server in '${line_array[0]}' with configuration found in '${line_array[2]}'"
-                backup $line_array "server";;
-            "backup_client")
-                echo "Configuring Backup Client in '${line_array[0]}' with configuration found in '${line_array[2]}'"
-                backup $line_array "client";;
-        esac
-    fi
-done < "$1"
