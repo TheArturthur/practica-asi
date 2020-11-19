@@ -33,39 +33,39 @@ function check_config_file () {
                 "mount")
                     echo "Mounting in '${line_array[0]}' with configuration found in '${line_array[2]}...'"
                     . ./aux/mount.sh
-                    mount $line_array;;
+                    mount ${line_array[@]};;
                 "raid")
                     echo "Configuring RAID in '${line_array[0]}' with configuration found in '${line_array[2]}...'"
                     . ./aux/raid.sh
-                    raid $line_array;;
+                    raid ${line_array[@]};;
                 "lvm")
                     echo "Configuring LVM in '${line_array[0]}' with configuration found in '${line_array[2]}...'"
                     . ./aux/lvm.sh
-                    lvm $line_array;;
+                    lvm ${line_array[@]};;
                 "nis_server")
                     echo "Configuring NIS Server in '${line_array[0]}' with configuration found in '${line_array[2]}...'"
                     . ./aux/nis.sh
-                    nis_server $line_array;;
+                    nis_server ${line_array[@]};;
                 "nis_client")
                     echo "Configuring NIS Client in '${line_array[0]}' with configuration found in '${line_array[2]}...'"
                     . ./aux/nis.sh
-                    nis_client $line_array;;
+                    nis_client ${line_array[@]};;
                 "nfs_server")
                     echo "Configuring NFS Server in '${line_array[0]}' with configuration found in '${line_array[2]}...'"
                     . ./aux/nfs_server.sh
-                    nfs_server $line_array;;
+                    nfs_server ${line_array[@]};;
                 "nfs_client")
                     echo "Configuring NFS Client in '${line_array[0]}' with configuration found in '${line_array[2]}...'"
                     . ./aux/nfs_client.sh
-                    nfs_client $line_array;;
+                    nfs_client ${line_array[@]};;
                 "backup_server")
                     echo "Configuring Backup Server in '${line_array[0]}' with configuration found in '${line_array[2]}...'"
                     . ./aux/backup_server.sh
-                    backup_server $line_array;;
+                    backup_server ${line_array[@]};;
                 "backup_client")
                     echo "Configuring Backup Client in '${line_array[0]}' with configuration found in '${line_array[2]}...'"
                     . ./aux/backup_client.sh
-                    backup_client $line_array;;
+                    backup_client ${line_array[@]};;
             esac
         fi
         ((counter++))
