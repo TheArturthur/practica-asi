@@ -1,15 +1,12 @@
 #!/bin/bash
 
-# REMOTE CONTROL:
-# https://askubuntu.com/questions/1153764/shell-script-for-installing-the-software-from-local-machine-to-remote-machine
-
-#
+# 
 function get_config_lines {
     num_lines=( $(wc -l $1) )
     
     # Open file in new fd:
     exec 6<"$1"
-    for ((i=0;i<${num_lines[0]};i++))
+    for (( i=0; i< $num_lines; i++ ))
     do
         read line <&6
         lines[$i]="$line"
@@ -61,7 +58,7 @@ function check_and_install_software { # $1: $me, $2: objective, $3..$#: packages
             fi
         done
     fi
-    #echo -e "\e[32mAll packages installed!\e[0m"
+    
 }
 
 #
@@ -71,5 +68,31 @@ function check_if_host_is_known () {
     if ! [ -n "$IS_KNOWN" ]
     then
         ssh-keyscan $1 >> ~/.ssh/known_hosts
+    fi
+}
+
+#
+function get_lvm_names_and_sizes () {
+    error_caught=0
+    lv_names=""
+    lv_sizes=""
+    for lv_pair in ${lines[@]:2}
+    do
+        if [[ $lv_pair =~ ^[a-zA-Z]+$ ]]
+        then
+            lv_names="$lv_names $lv_pair"
+        elif [[ $lv_pair =~ ^[0-9]+[A-Z]{2}$ ]]
+        then
+            lv_sizes="$lv_sizes $lv_pair"
+        else
+            echo -e "\e[31mERROR: Wrong word $lv_pair in config file!\e[0m"
+            error_caught=1
+        fi
+    done
+
+    if [ $error_caught -eq 1 ]
+    then
+        echo -e "\e[31mExecution stopped.\e[0m"
+        exit 1
     fi
 }
