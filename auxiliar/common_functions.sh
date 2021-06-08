@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# 
+# Opens the configuration file in use and extracts its lines into a variable.
+# IN: PATH to config file
 function get_config_lines {
     num_lines=( $(wc -l $1) )
     
@@ -16,7 +17,9 @@ function get_config_lines {
     exec 6<&-
 }
 
-#
+# Prints whether the desired execution went as expected or not.
+# IN: RET_CODE from the command executed
+# IN: FUNCTION to be executed
 function print_result {
     if [[ $1 -ne 0 ]]
     then
@@ -26,7 +29,10 @@ function print_result {
     fi
 }
 
-#
+# Lookup for the necessary software either locally or remotely, and installs it.
+# IN: LOCAL IP
+# IN: OBJECTIVE IP
+# IN: PACKAGES to install
 function check_and_install_software { # $1: $me, $2: objective, $3..$#: packages
     echo $@
     sudo apt-get update > /dev/null
@@ -61,7 +67,8 @@ function check_and_install_software { # $1: $me, $2: objective, $3..$#: packages
     
 }
 
-#
+# Checks if remote host is known, and adds a ssh key if negative.
+# IN: HOST
 function check_if_host_is_known () {
     IS_KNOWN=$(ssh-keygen -F $1)
 
@@ -71,7 +78,8 @@ function check_if_host_is_known () {
     fi
 }
 
-#
+# Splits names and sizes from LVM config file into its separate arrays.
+# IN: LIST of ordered names & sizes
 function get_lvm_names_and_sizes () {
     error_caught=0
     lv_names=""
