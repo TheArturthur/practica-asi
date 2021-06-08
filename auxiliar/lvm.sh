@@ -8,10 +8,12 @@ function lvm () {
     if [[ ${#lines} -lt 3 ]]
     then
         echo -e "\e[31m ERROR: Config file must have at least 3 lines!\n\e[0m"
-        exit 1
+        print_result $0 1
     fi
 
     me=$(hostname -I | xargs)
+
+    check_and_install_software $me $1 sshpass pvcreate vgcreate lvcreate
 
     if [[ $me != $1 ]]
     then # remote
@@ -22,7 +24,7 @@ function lvm () {
         range=${#lv_names[@]}
         for i in $(seq 0 $range)
         do
-            sshpass -p "practicas" ssh -l practicas $1 "echo practicas | sudo -Slvcreate --name ${lv_names[$i]} --size ${lv_sizes[$i]} ${lines[0]}"
+            sshpass -p "practicas" ssh -l practicas $1 "echo practicas | sudo -S lvcreate --name ${lv_names[$i]} --size ${lv_sizes[$i]} ${lines[0]}"
         done
 
     else # local
