@@ -10,7 +10,6 @@ function raid () {
 
     echo ${devices[0]}
 
-    exit 1
     # Get local IP address to configure in local or remote host:
     me=$(hostname -I | xargs)
    
