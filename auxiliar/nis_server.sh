@@ -2,6 +2,8 @@
 
 . ./auxiliar/common_functions.sh
 
+# Using https://www.server-world.info/en/note?os=Debian_7.0&p=nis&f=1
+
 function nis_server () {       # [destination_IP, "nis_server", conf_file]
     get_config_lines $3        # lines = [0: nis_server_name]
 
