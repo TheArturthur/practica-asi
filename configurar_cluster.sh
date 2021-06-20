@@ -44,11 +44,11 @@ function check_config_file () {
                     lvm ${line_array[@]};;
                 "nis_server")
                     echo "Configuring NIS Server in '${line_array[0]}' with configuration found in '${line_array[2]}...'"
-                    . ./auxiliar/nis.sh
+                    . ./auxiliar/nis_server.sh
                     nis_server ${line_array[@]};;
                 "nis_client")
                     echo "Configuring NIS Client in '${line_array[0]}' with configuration found in '${line_array[2]}...'"
-                    . ./auxiliar/nis.sh
+                    . ./auxiliar/nis_client.sh
                     nis_client ${line_array[@]};;
                 "nfs_server")
                     echo "Configuring NFS Server in '${line_array[0]}' with configuration found in '${line_array[2]}...'"
