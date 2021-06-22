@@ -1,0 +1,26 @@
+Aquí se encuentran definidas funciones auxiliares a los métodos principales del proyecto.
+
+\subsubsection{get\_config\_lines}
+Este método lee el fichero de configuración pasado como argumento y extrae cada una de sus líneas en una variable, de nombre \texttt{lines}, usada como array.
+
+\subsubsection{print\_result}
+Recibe un valor numérico de retorno y la función desde la que se llamó al comando que devolvió dicho valor. Imprime un mensaje informando de éxito, o especificando la función en la que se dio error.
+
+\subsubsection{check\_and\_install\_software}
+Este método recibe la dirección IP local y la de destino de la configuración, junto a un listado de los paquetes necesarios para ejecutar la función llamante.
+
+Este método comprueba si ambas direcciones IP coinciden, en cuyo caso la instalación será local. En otro caso será sobre una máquina en remoto, para lo que necesitará instalar localmente (si no está previamente instalado) el paquete sshpass, para poder operar de manera cómoda en la máquina remota.
+
+Después, comprobará si el paquete ya se encuentra instalado en la máquina objetivo, e instalará aquellos que no lo estén.
+
+\subsubsection{check\_if\_host\_is\_known}
+Este método comprueba si la IP pasada como argumento existe en el fichero \\\texttt{\(\sim\)/.ssh/known\_hosts}. En caso de no existir, añade una nueva clave ssh para dicha IP.
+
+\subsubsection{get\_lvm\_names\_and\_sizes}
+Esta función sólamente es llamada desde el método principal LVM.
+
+Recibe una lista ordenada de los nombres y tamaños de los distintos volúmenes lógicos a crear, obtenidos del fichero de configuración.
+
+Comprueba los distintos pares \texttt{<Nombre, Tamaño>} que encuentra y los separa de manera ordenada en dos listas diferentes, una para nombres y otra para tamaños, estando todos los pares en los mismos índices de ambas listas.
+
+En el caso de que alguno no esté escrito adecuadamente, finaliza la ejecución con un error.
