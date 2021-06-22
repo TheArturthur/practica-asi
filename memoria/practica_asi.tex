@@ -1,4 +1,4 @@
-\documentclass[11pt, spanish, a4paper, hidelinks]{article}
+\documentclass[12pt, spanish, a4paper, hidelinks]{article}
 
 \input{practica_asi.sty}
 
@@ -7,24 +7,43 @@
     
     \tableofcontents
 
+    \newpage
     \section{Introduccion}
     \input{secciones/introduccion}
 
+    \newpage
+    \section{Configuración \textit{Mount}}
+    \input{secciones/mount}
+
+    \newpage
     \section{Configuración RAID}
-    \input{secciones/conf_raid}
+    \input{secciones/raid}
     
+    \newpage
     \section{Configuración LVM}
-    \input{secciones/conf_lvm}
+    \input{secciones/lvm}
     
+    \newpage 
     \section{Configuración NIS}
-    \input{secciones/conf_nis}
+    \input{secciones/nis}
     
+    \newpage
     \section{Configuración NFS}
-    \input{secciones/conf_nfs}
+    \input{secciones/nfs}
 
-    \section{Configuración \textit{backup}}
-    \input{secciones/conf_backup}
+    \newpage
+    \section{Configuración \textit{Backup}}
+    \input{secciones/backup}
 
+    \newpage
     \section{Dificultades encontradas}
     \input{secciones/dificultades}
+
+    \newpage
+    \section{Timeline del proyecto}
+    \input{secciones/timeline}
+
+    \newpage
+    \section{Gráfico de versiones}
+    \input{secciones/git_graph}
 \end{document}
