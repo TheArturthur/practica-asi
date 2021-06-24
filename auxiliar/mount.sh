@@ -8,20 +8,11 @@ function mount () {     # linearray[@] -> $1: destination host; $2: service; $3:
     # Get local IP address to configure in local or remote host:
     me=$(hostname -I | xargs)
 
+    check_and_install_software $me $1 sshpass mount
+
     if [[ $me != $1 ]]
     then
         # Remote option:
-
-        # Check if sshpass is installed. If not, install:
-        sshpass -V > /dev/null
-
-        if [[ $? -ne 0 ]]
-        then
-            echo "Installing required packages..."
-            sudo apt-get update > /dev/null
-            sudo apt-get install sshpass > /dev/null
-            echo "All packages installed!"
-        fi
 
         # Sequence of commands to create directories (if necessary) and mount the filesystem:
         MOUNT_LINE="echo practicas | sudo -S mkdir -p ${lines[@]}; echo practicas | sudo -S mount --bind ${lines[@]}"

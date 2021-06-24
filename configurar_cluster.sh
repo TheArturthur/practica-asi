@@ -76,13 +76,19 @@ function check_config_file () {
 
 if [[ $# -ne 1 || $1 = "-h" || $1 = "--help" ]]
 then
-    echo "use: $0 <configuration file>" >&2
+    echo "use: sudo $0 <configuration file>" >&2
     exit 1
 fi
 
 if ! [[ -f $1 ]]
 then
     echo  "$0: $1: No such file exists" >&2
+    exit 1
+fi
+
+if [ "$EUID" -ne 0 ]
+then
+    echo "Please run me as sudo/root!"
     exit 1
 fi
 
