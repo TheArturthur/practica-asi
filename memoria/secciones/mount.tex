@@ -1,0 +1,22 @@
+Esta función se encarga de montar el Sistema de Ficheros dado en el directorio de destino especificado, creándolo en caso de que no existiera.
+
+Para ello, lo primero que hace es usar el método auxiliar \texttt{get\_config\_lines} para obtener las líneas del fichero de configuración, en las que aparece el nombre del sistema de ficheros a montar y del directorio de destino de montaje. Las líneas deberán ser de la siguiente manera:
+\begin{enumerate}
+    \item Nombre del dispositivo
+    \item Directorio de montaje
+\end{enumerate}
+
+Luego, hace uso de la función \texttt{check\_and\_install\_software} para instalar, sea local o remotamente, los paquetes necesarios para realizar el montaje. Estos paquetes son:
+\begin{itemize}
+    \item \textbf{Montaje local:}
+    \begin{itemize}
+        \item mount
+    \end{itemize}
+    \item \textbf{Montaje remoto:}
+    \begin{itemize}
+        \item sshpass localmente
+        \item mount en el equipo de destino
+    \end{itemize}
+\end{itemize}
+
+Finalmente, crea el directorio de destino si no existía y luego monta el sistema de ficheros en él, haciendo uso del comando \texttt{mount}\cite{mount}.

@@ -1,0 +1,23 @@
+Esta función creará un sistema RAID en la máquina de destino especificada.
+
+Las líneas del fichero de configuración del servicio se definen como sigue:
+\begin{enumerate}
+    \item Nombre del dispositivo RAID
+    \item Nivel/Tipo de RAID
+    \item Dispositivos que lo componen
+\end{enumerate}
+
+Después de obtener las líneas pertinentes del fichero de configuración, comprueba e instala los paquetes necesarios usando el método auxiliar \texttt{check\_and\_install\_software}:
+\begin{itemize}
+    \item Localmente:
+    \begin{itemize}
+        \item mdadm 
+    \end{itemize}
+    \item En remoto:
+    \begin{itemize}
+        \item sshpass localmente
+        \item mdadm en la máquina remota
+    \end{itemize}
+\end{itemize}
+
+Finalmente, usará el comando \texttt{mdadm}\cite{raid} en la máquina de destino (o mediante el comando \texttt{sshpass} en local) para crear el dispositivo RAID con el nombre, nivel y dispositivos especificados en el fichero de configuración.

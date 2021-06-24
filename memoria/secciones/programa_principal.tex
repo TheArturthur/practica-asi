@@ -1,0 +1,7 @@
+Lo primero que comprueba el programa principal es si usamos el número de argumentos correcto (uno, el fichero de configuración del cluster); o si usamos los argumentos de ayuda \texttt{-h, --help}, en cuyo caso nos imprime un mensaje de uso.
+
+También comprueba si el fichero de configuración especificado existe y es un fichero (no un directorio, por ejemplo); y si estamos ejecutando el script como superusuario.
+
+Una vez hechas todas las comprobaciones, lee el fichero de configuración y extrae la información del mismo (IP de destino, mandato y fichero de configuración para el mandato). Todo ello, siempre que cumpla con las normas de sintaxis del fichero, para lo que contrasta la línea contra una serie de expresiones regulares (RegEx), que filtrarán las líneas comentadas y avisará si alguna línea está mal escrita.
+
+Si cumple las RegEx, llamará al servicio que se requiera para cada línea.
