@@ -45,7 +45,7 @@ function check_and_install_software { # $1: $me, $2: objective, $3..$#: packages
             if [[ $? -ne 0 ]]
             then
                 echo "Installing required package $package on $1..."
-                sudo apt-get install $package
+                sudo aptitude install -y $package
             fi
         done
     else # remote install
@@ -57,10 +57,10 @@ function check_and_install_software { # $1: $me, $2: objective, $3..$#: packages
             then
                 dpkg -s $package 
                 echo "Installing sshpass locally..."
-                sudo apt-get install $package
+                sudo aptitude install -y $package
             else
                 echo "Installing $package in $2..."
-                sshpass -p "practicas" ssh -l practicas $2 "sudo apt-get install $package"
+                sshpass -p "practicas" ssh -l practicas $2 "sudo aptitude install -y $package"
             fi
         done
     fi
