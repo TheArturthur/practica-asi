@@ -3,3 +3,4 @@ vm/
 .gitGraph/
 *.bcf
 *.run.xml
+*.texr

@@ -1,0 +1,60 @@
+..
+├── README.md
+├── auxiliar
+│   ├── backup_client.sh
+│   ├── backup_server.sh
+│   ├── common_functions.sh
+│   ├── lvm.sh
+│   ├── mount.sh
+│   ├── nfs_client.sh
+│   ├── nfs_server.sh
+│   ├── nis_client.sh
+│   ├── nis_server.sh
+│   └── raid.sh
+├── configs
+│   ├── lvm.conf
+│   ├── mount_raid.conf
+│   ├── nfs_client.conf
+│   ├── nfs_server.conf
+│   ├── nis_client.conf
+│   └── raid.conf
+├── configurar_cluster.sh
+├── enunciado_asi.pdf
+├── memoria
+│   ├── build.sh
+│   ├── includes
+│   │   ├── graph.png
+│   │   ├── log.tex
+│   │   └── log.texr
+│   ├── practica_asi.bcf
+│   ├── practica_asi.bib
+│   ├── practica_asi.pdf
+│   ├── practica_asi.run.xml
+│   ├── practica_asi.sty
+│   ├── practica_asi.synctex.gz
+│   ├── practica_asi.tex
+│   └── secciones
+│       ├── backup.tex
+│       ├── common_functions.tex
+│       ├── dificultades.tex
+│       ├── estructura_ficheros.tex
+│       ├── estructura_ficheros.texr
+│       ├── git_graph.tex
+│       ├── introduccion.tex
+│       ├── lvm.tex
+│       ├── mount.tex
+│       ├── nfs.tex
+│       ├── nis.tex
+│       ├── programa_principal.tex
+│       ├── raid.tex
+│       └── timeline.tex
+└── pruebas
+    ├── lvm
+    │   └── prueba_1.txt
+    ├── mount
+    │   └── prueba_1.txt
+    └── raid
+        ├── prueba_1.txt
+        └── prueba_test.txt
+
+9 directories, 48 files
