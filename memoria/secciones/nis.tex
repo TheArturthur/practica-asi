@@ -1,0 +1,28 @@
+Esta función, al igual que las siguientes, se compone de una configuración distinta para máquinas servidor y cliente.
+
+\subsection{Servidor NIS}
+Después de obtener la línea del fichero de configuración, la cual contiene el nombre del que será el servidor NIS, instala los siguientes paquetes software:
+\begin{itemize}
+    \item Destino local:
+    \begin{itemize}
+        \item nis
+    \end{itemize}
+    \item Destino remoto:
+    \begin{itemize}
+        \item sshpass localmente
+        \item nis en la máquina remota
+    \end{itemize}
+\end{itemize}
+\small{\textbf{NOTA:} Al realizar la instalación, es requisito que el usuario introduzca el nombre del servidor NIS.}\\
+
+Después de esto, configura los siguientes ficheros creados por el programa de instalación\cite{nisserver}:
+\begin{itemize}
+    \item \texttt{/etc/default/nis}: Al que modificará la variable \textbf{NISSERVER}, dándole el valor \textit{master}.
+    \item \texttt{/etc/ypserv.securenets}: Comentará la dirección IP por defecto (0.0.0.0) y añadirá la dirección IP de la red a la que está conectada la máquina con máscara /24 (255.255.255.0).
+    \item \texttt{/etc/default/nis}: Modificará también la variable \textbf{MERGEGROUP}, de \textit{FALSE} a \textit{TRUE}.
+    \item \texttt{/etc/hosts}: Añadirá la dirección IP de red, junto al nombre del host y el nombre del servidor NIS.
+\end{itemize}
+
+Para terminar, aplica la configuración con el mandato \texttt{/usr/lib/yp/ypinit -m} y reinicia el servicio NIS creado.
+
+\subsection{Cliente NIS}

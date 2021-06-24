@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. ./common_functions.sh
+. auxiliar/common_functions.sh
 
 function nis_client () {
     get_config_lines $3        # lines = [0: nis_server_name, 1: nis_server_ip]

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. ./auxiliar/common_functions.sh
+. auxiliar/common_functions.sh
 
 # Using https://www.server-world.info/en/note?os=Debian_7.0&p=nis&f=1
 
@@ -26,8 +26,8 @@ function nis_server () {       # [destination_IP, "nis_server", conf_file]
 
         sshpass -p "practicas" ssh -l practicas $2 "sudo service nis restart"
 
-        # In case users where added:
-        sshpass -p "practicas" ssh -l practicas $2 "sudo cd /var/yp ; make"
+        # In case clients are added:
+        #sshpass -p "practicas" ssh -l practicas $2 "sudo cd /var/yp ; make"
 
     else # local
         sed -i -r "s/^NISSERVER=.*$/NISSERVER=master/" /etc/default/nis
