@@ -1,9 +1,5 @@
 vm/
 *.syntex.gz
 .gitGraph/
-memoria/**
-!memoria/practica_asi.sty
-!memoria/practica_asi.tex
-!memoria/practica_asi.bib
-!memoria/secciones/
-!memoria/includes/
+*.bcf
+*.run.xml
