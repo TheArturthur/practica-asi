@@ -1,0 +1,38 @@
+Este método crea un Volumen Lógico en la máquina destino especificada.
+
+Comprobará, a partir de la obtención de las líneas de configuración, que haya al menos tres líneas, puesto que el volumen lógico queda definido de la siguiente forma:
+\begin{enumerate}
+    \item El nombre del volumen
+    \item Lista de dispositivos que lo componen
+    \item Nombre del volumen 1 y tamaño del mismo
+    \item Nombre del volumen 2 y tamaño del mismo
+    \item Nombre del volumen 3 y tamaño del mismo
+    \item etc.
+\end{enumerate}
+En caso de no haber al menos tres líneas en el fichero de configuracíon, devolverá error.
+
+Seguidamente, al igual que en los servicios anteriores, instalará el software necesario en las máquinas:
+\begin{itemize}
+    \item Destino local:
+    \begin{itemize}
+        \item pvcreate 
+        \item vgcreate
+        \item lvcreate
+    \end{itemize}
+    \item Destino remoto:
+    \begin{itemize}
+        \item sshpass localmente
+        \item pvcreate en la máquina remota
+        \item vgcreate en la máquina remota
+        \item lvcreate en la máquina remota
+    \end{itemize}
+\end{itemize}
+
+También obtendrá, a partir de la tercera línea del fichero de configuración (y de las siguientes, si procediera), una lista con todos los nombres de los dispositivos y otra con todos los tamaños. Ambas listas están ordenadas de forma que compartan el índice, según la función auxiliar \texttt{get\_lvm\_names\_and\_sizes} definida anteriormente.
+
+Finalmente, seguirá la siguiente secuencia:
+\begin{enumerate}
+    \item Proceder a crear un grupo con la lista de dispositivos, con el comando \texttt{pvcreate}\cite{lvm}. 
+    \item Crear el volumen lógico asociado a ese grupo, con el nombre especificado, usando el comando \texttt{vgcreate}\cite{lvm}.
+    \item Añadir los dispositivos y tamaños especificados, en orden, con el comando \texttt{lvcreate}\cite{lvm}.
+\end{enumerate}
