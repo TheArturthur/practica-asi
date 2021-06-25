@@ -27,8 +27,9 @@ function nfs_client () {       # linearray[@] <client|server>
             
             sshpass -p "practicas" ssh -l practicas $1 "mount -t nfs $host.$domain_name:$remote_dir $local_dir"
 
-            sshpass -p "practicas" ssh -l practicas $1 "echo \"$host.$domain_name:$remote_dir    $local_dir    nfs    defaults    0    0\""
+            sshpass -p "practicas" ssh -l practicas $1 "echo \"$host.$domain_name:$remote_dir    $local_dir    nfs    defaults    0    0\" >> /etc/fstab"
         done
+
     else # local
         domain_name=$(domainname -b practicas-asi)
 
@@ -45,9 +46,7 @@ function nfs_client () {       # linearray[@] <client|server>
             
             mount -t nfs $host.$domain_name:$remote_dir $local_dir
 
-            echo "$host.$domain_name:$remote_dir    $local_dir    nfs    defaults    0    0"
+            echo "$host.$domain_name:$remote_dir    $local_dir    nfs    defaults    0    0" >> /etc/fstab
         done
-
-        #/etc/init.d/nfs-kernel-server restart
     fi
 }
