@@ -1,0 +1,62 @@
+\subsection{Servidor NFS}
+Primeramente, recoge las líneas del fichero de configuración, las cuales definen las rutas de los distintos directorios a exportar.
+
+Después, instala el software necesario en la máquina:
+\begin{itemize}
+    \item Destino local
+    \begin{itemize}
+        \item nfs-kernel-server
+    \end{itemize}
+    \item Destino remoto
+    \begin{itemize}
+        \item sshpass en la máquina local
+        \item nfs-kernel-server en la máquina remota
+    \end{itemize}
+\end{itemize}
+
+Una vez instalado, modificará la variable \texttt{Domain} con el nombre de dominio de la máquina en el fichero \texttt{/etc/idmapd.conf}; y después, para cada uno de los directorios especificados en el fichero de configuración, añadirá los siguientes datos, en líneas por cada directorio a exportar\cite{nfsserver}:
+
+\begin{itemize}
+    \item Ruta del directorio
+    \item Dirección IP de la red en la que se comparte, con máscara /24
+    \item Las opciones para el mismo, siendo las siguientes:
+    \begin{itemize}
+        \item rw: marca permiso de lectura y escritura
+        \item sync: habilita la sincronización del directorio
+        \item fsid=0: asigna el id 0 al nuevo Sistema de Ficheros
+        \item no\_root\_squash: habilita permisos de root
+        \item no\_subtree\_check: deshabilita la comprobación del subárbol de directorios
+    \end{itemize}
+\end{itemize}
+
+Por último, reiniciará el servicio para cargar la nueva configuración.
+
+\subsection{Cliente NFS}
+
+Primero obtiene las líneas del fichero de configuración, el cual contiene, por cada línea:
+\begin{itemize}
+    \item La dirección IP del servidor NFS
+    \item La ruta del directorio remoto
+    \item El punto de montaje del nuevo directorio   
+\end{itemize}
+
+Después, instala el software necesario:
+\begin{itemize}
+    \item Destino local:
+    \begin{itemize}
+        \item nfs-common
+        \item mount
+    \end{itemize}
+    \item Destino remoto:
+    \begin{itemize}
+        \item sshpass en la máquina local
+        \item nfs-common en la máquina remota
+        \item mount en la máquina remota
+    \end{itemize}
+\end{itemize}
+
+Para la configuración, primero modifica la variable \texttt{Domain} con el nombre de dominio de la máquina, en el fichero \texttt{/etc/idmapd.conf}, tras lo cual, reinicia el servicio \texttt{nfs-common} con la nueva configuración.
+
+Luego, para cada línea del fichero de configuración del servicio, monta el directorio por nfs desde la ruta en la máquina de origen a la ruta en la máquina de destino. 
+
+Finalmente, añade la relación entre cada pareja de directorios al fichero \texttt{/etc/fstab}, de forma que se monte cada vez que se inicie sesión.

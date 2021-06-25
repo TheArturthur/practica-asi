@@ -1,0 +1,50 @@
+Esta función, al igual que las siguientes, se compone de una configuración distinta para máquinas servidor y cliente.
+
+\subsection{Servidor NIS}
+Después de obtener la línea del fichero de configuración, la cual contiene únicamente el nombre del que será el servidor NIS, instala los siguientes paquetes software\footnote{\textbf{NOTA:} Al realizar la instalación, es requisito que el usuario introduzca el nombre del servidor NIS.}:
+\begin{itemize}
+    \item Destino local:
+    \begin{itemize}
+        \item nis
+    \end{itemize}
+    \item Destino remoto:
+    \begin{itemize}
+        \item sshpass localmente
+        \item nis en la máquina remota
+    \end{itemize}
+\end{itemize}
+
+Después de esto, configura los siguientes ficheros creados por el programa de instalación\cite{nisserver}:
+\begin{itemize}
+    \item \texttt{/etc/default/nis}: Al que modificará la variable \textbf{NISSERVER}, dándole el valor \textit{master}.
+    \item \texttt{/etc/ypserv.securenets}: Comentará la dirección IP por defecto (0.0.0.0) y añadirá la de la red a la que está conectada la máquina, con máscara /24 (255.255.255.0).
+    \item \texttt{/etc/default/nis}: Modificará también la variable \textbf{MERGEGROUP}, de \textit{FALSE} a \textit{TRUE}.
+    \item \texttt{/etc/hosts}: Añadirá la dirección IP de red, junto al nombre del host y el nombre del servidor NIS.
+\end{itemize}
+
+Para terminar, aplica la configuración con el mandato \texttt{/usr/lib/yp/ypinit -m} y reinicia el servicio NIS creado.
+
+\subsection{Cliente NIS}
+Una vez obtenidas las líneas del fichero de configuración, que contiene el nombre del servidor NIS (como en la configuración de la parte servidor) y la dirección IP de dicho servidor; instala los siguientes paquetes:
+\begin{itemize}
+    \item Destino local:
+    \begin{itemize}
+        \item nis
+    \end{itemize}
+    \item Destino remoto:
+    \begin{itemize}
+        \item sshpass localmente
+        \item nis en la máquina destino
+    \end{itemize}
+\end{itemize}
+
+Luego, configura los siguientes ficheros creados al instalar el software\cite{nisclient}:
+\begin{itemize}
+    \item \texttt{/etc/yp.conf}: Añade el nombre del servidor y su dirección IP.
+    \item \texttt{/etc/nsswitch.conf}: Añade la opción "nis" en los grupos \texttt{passwd}, \texttt{group}, \texttt{shadow} y \texttt{hosts}.
+    \item \texttt{/etc/pam.d/common-session}: Añade la configuración para crear el directorio \texttt{HOME} al inicio de la sesión automáticamente.
+\end{itemize}
+
+Luego, añade el nuevo cliente al servidor, para poder usarse en el próximo inicio.
+
+Para terminar, pregunta al usuario si quiere reiniciar el sistema, para poder empezar usar el servidor NIS ya configurado. En función de la respuesta (si no la hay, asumirá una respuesta afirmativa) reiniciará el sistema.
